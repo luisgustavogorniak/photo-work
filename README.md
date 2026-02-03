@@ -29,8 +29,8 @@ Um aplicativo de tarefas minimalista criado para demonstrar como uma arquitetura
 
 ### 1. Clone o repositório
 ```
-git clone https://github.com/seu-nome-de-usuário/seu-repositório.git
-cd seu-repositório
+git clone https://github.com/seu-nome-de-usuário/next-auth-todo.git
+cd next-auth-todo
 ```
 
 ### 2. Instale as dependências
