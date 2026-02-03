@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aplicativo de Afazeres
 
-## Getting Started
+Um aplicativo de tarefas minimalista criado para demonstrar como uma arquitetura moderna pode resolver problemas comuns com menos código e uma estrutura clara.
+---
 
-First, run the development server:
+## Objetivos do Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Construir um aplicativo CRUD do mundo real com autenticação
+- Manter o código-fonte pequeno e legível
+- Evitar abstrações desnecessárias
+- Usar uma stack de tecnologias moderna para reduzir o código repetitivo, não para adicionar complexidade
+
+## Stack de Ferramentas
+
+- Next.js (App Router)
+- Prisma
+- Better Auth
+- PostgreSQL
+- Tailwind CSS
+
+## Funcionalidades
+
+- Autenticação de usuários
+- Criar, editar e excluir tarefas (todos)
+- Persistência do estado de conclusão
+- Interface de usuário limpa e minimalista
+
+## Executando localmente
+
+### 1. Clone o repositório
+```
+git clone https://github.com/seu-nome-de-usuário/seu-repositório.git
+cd seu-repositório
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instale as dependências
+```
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Variáveis ​​de ambiente
+Este projeto usa o Prisma para acesso ao banco de dados e o Better-Auth para autenticação.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Crie um arquivo `.env` e forneça as seguintes variáveis:
+```
+DATABASE_URL=
 
-## Learn More
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=
+```
 
-To learn more about Next.js, take a look at the following resources:
+Você pode usar qualquer banco de dados compatível com PostgreSQL.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Se você ainda não possui um banco de dados, pode criar um banco de dados PostgreSQL gratuito usando serviços como Prisma Postgres, Supabase ou Neon.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Após definir a variável `DATABASE_URL`, execute:
 
-## Deploy on Vercel
+npx prisma migrate dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. Execute o servidor de desenvolvimento
+```
+npm run dev
+```
+---
+Para obter mais detalhes sobre a configuração de autenticação e os provedores suportados, consulte a documentação oficial:
+https://better-auth.com/
