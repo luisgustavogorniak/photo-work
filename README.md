@@ -54,8 +54,9 @@ Você pode usar qualquer banco de dados compatível com PostgreSQL.
 Se você ainda não possui um banco de dados, pode criar um banco de dados PostgreSQL gratuito usando serviços como Prisma Postgres, Supabase ou Neon.
 
 Após definir a variável `DATABASE_URL`, execute:
-
+```
 npx prisma migrate dev
+```
 
 ### 4. Execute o servidor de desenvolvimento
 ```
