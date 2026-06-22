@@ -1,8 +1,26 @@
-  @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* ==========================================
+   DESIGN SYSTEM — Photo Work SaaS
+   Paleta: Câmara Escura Fotográfica
+   ========================================== */
+
+@theme inline {
+  --color-pw-bg: #0F0E0C;
+  --color-pw-surface: #1A1916;
+  --color-pw-border: #2C2A26;
+  --color-pw-accent: #C8813A;
+  --color-pw-accent-hover: #A8692E;
+  --color-pw-text: #F0EDE8;
+  --color-pw-text-muted: #7A756E;
+  --color-pw-success: #4A7C59;
+  --color-pw-danger: #8B3A3A;
+  --color-pw-warning: #C8A23A;
+}
 
 @layer base {
   * {
@@ -10,22 +28,67 @@
   }
 
   body {
-    @apply bg-[#101828] text-[#ffffff]  px-5;
-    font-family: 'Geist', sans-serif;
+    background-color: var(--color-pw-bg);
+    color: var(--color-pw-text);
+    font-family: 'Inter', sans-serif;
   }
 }
 
 @layer components {
+  /* ---- Botões ---- */
   .btn-primary {
-    @apply px-6 py-2 bg-[#1e8a4d] text-white font-medium rounded hover:bg-[#25a05a] transition cursor-pointer;
+    @apply px-5 py-2.5 font-medium rounded-md transition-all duration-200 cursor-pointer;
+    background-color: var(--color-pw-accent);
+    color: var(--color-pw-bg);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-pw-accent-hover);
   }
 
   .btn-secondary {
-    @apply px-6 py-2 bg-white text-[#111827] font-medium rounded border border-[#e5e7eb] hover:bg-[#f3f4f6] transition cursor-pointer;
+    @apply px-5 py-2.5 font-medium rounded-md transition-all duration-200 cursor-pointer;
+    background-color: transparent;
+    color: var(--color-pw-text);
+    border: 1px solid var(--color-pw-border);
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-pw-surface);
   }
 
   .btn-danger {
-    @apply px-6 py-2 bg-red-600 text-white font-medium rounded hover:bg-red-700 transition cursor-pointer;
+    @apply px-5 py-2.5 font-medium rounded-md transition-all duration-200 cursor-pointer;
+    background-color: var(--color-pw-danger);
+    color: var(--color-pw-text);
+  }
+  .btn-danger:hover {
+    opacity: 0.85;
+  }
+
+  /* ---- Inputs ---- */
+  .input-field {
+    @apply w-full rounded-md px-3 py-2.5 text-sm transition-all duration-200 outline-none;
+    background-color: var(--color-pw-bg);
+    color: var(--color-pw-text);
+    border: 1px solid var(--color-pw-border);
+  }
+  .input-field::placeholder {
+    color: var(--color-pw-text-muted);
+  }
+  .input-field:focus {
+    border-color: var(--color-pw-accent);
+    box-shadow: 0 0 0 2px rgba(200, 129, 58, 0.15);
+  }
+
+  /* ---- Cards ---- */
+  .card {
+    @apply rounded-lg p-6;
+    background-color: var(--color-pw-surface);
+    border: 1px solid var(--color-pw-border);
+  }
+
+  /* ---- Labels ---- */
+  .form-label {
+    @apply block text-[13px] font-medium mb-1.5;
+    color: var(--color-pw-text);
   }
 }
-

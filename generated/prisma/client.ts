@@ -60,7 +60,72 @@ export type Account = Prisma.AccountModel
  */
 export type Verification = Prisma.VerificationModel
 /**
- * Model Todo
+ * Model Organization
  * 
  */
-export type Todo = Prisma.TodoModel
+export type Organization = Prisma.OrganizationModel
+/**
+ * Model Member
+ * 
+ */
+export type Member = Prisma.MemberModel
+/**
+ * Model Invitation
+ * 
+ */
+export type Invitation = Prisma.InvitationModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel
+/**
+ * Model Order
+ * 
+ */
+export type Order = Prisma.OrderModel
+/**
+ * Model OrderEnvelope
+ * 
+ */
+export type OrderEnvelope = Prisma.OrderEnvelopeModel
+/**
+ * Model OrderItem
+ * 
+ */
+export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model ProductComponent
+ * 
+ */
+export type ProductComponent = Prisma.ProductComponentModel
+/**
+ * Model InventoryMovement
+ * 
+ */
+export type InventoryMovement = Prisma.InventoryMovementModel
+/**
+ * Model ProductionWorkflow
+ * 
+ */
+export type ProductionWorkflow = Prisma.ProductionWorkflowModel
+/**
+ * Model WorkflowStep
+ * 
+ */
+export type WorkflowStep = Prisma.WorkflowStepModel
+/**
+ * Model OrderProductionStatus
+ * 
+ */
+export type OrderProductionStatus = Prisma.OrderProductionStatusModel
+/**
+ * Model FinancialTransaction
+ * 
+ */
+export type FinancialTransaction = Prisma.FinancialTransactionModel

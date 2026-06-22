@@ -3,15 +3,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth-client";
-import { Button } from "@/components/ui/button";
+import { Camera } from "lucide-react";
+import Link from "next/link";
 
 export default function SignInPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
+    setLoading(true);
 
     const formData = new FormData(e.currentTarget);
 
@@ -20,41 +23,87 @@ export default function SignInPage() {
       password: formData.get("password") as string,
     });
 
+    setLoading(false);
+
     if (res.error) {
-      setError(res.error.message || "Something went wrong.");
+      setError(res.error.message || "Ocorreu um erro ao fazer login.");
     } else {
-      router.push("/to-do");
+      router.push("/dashboard");
     }
   }
 
   return (
-    <main className="max-w-md flex items-center justify-center flex-col flex-1 mx-auto p-6 space-y-4 ">
-      <h1 className="text-2xl font-bold">Fazer login</h1>
+    <main className="flex items-center justify-center min-h-screen">
+      <div className="w-full max-w-sm px-6">
+        {/* Logo */}
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="w-10 h-10 rounded-lg bg-pw-accent flex items-center justify-center">
+            <Camera size={22} className="text-pw-bg" />
+          </div>
+          <span className="text-xl font-bold text-pw-text tracking-tight">
+            Photo Work
+          </span>
+        </div>
 
-      {error && <p className="text-red-500">{error}</p>}
+        <div className="card">
+          <h1 className="text-lg font-bold text-pw-text mb-1">Fazer Login</h1>
+          <p className="text-sm text-pw-text-muted mb-6">
+            Entre com suas credenciais para acessar o sistema.
+          </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          required
-          className="w-full rounded-md  border border-neutral-700 px-3 py-2"
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          className="w-full rounded-md  border border-neutral-700 px-3 py-2"
-        />
-        <Button
-          type="submit"
-          className="w-full btn-primary font-medium rounded-md px-4 py-2 cursor-pointer"
-        >
-          Entrar
-        </Button>
-      </form>
+          {error && (
+            <div className="mb-4 px-3 py-2 rounded-md text-sm bg-pw-danger/15 text-pw-danger border border-pw-danger/30">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="email" className="form-label">
+                E-mail
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="seu@email.com"
+                required
+                className="input-field"
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="form-label">
+                Senha
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="••••••••"
+                required
+                className="input-field"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary w-full text-sm disabled:opacity-50"
+            >
+              {loading ? "Entrando..." : "Entrar"}
+            </button>
+          </form>
+
+          <p className="text-sm text-pw-text-muted text-center mt-6">
+            Ainda não tem conta?{" "}
+            <Link
+              href="/sign-up"
+              className="text-pw-accent hover:underline font-medium"
+            >
+              Criar conta
+            </Link>
+          </p>
+        </div>
+      </div>
     </main>
   );
 }

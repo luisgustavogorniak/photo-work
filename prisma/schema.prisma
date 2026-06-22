@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -13,6 +7,10 @@ datasource db {
   provider = "postgresql"
 }
 
+// ==========================================
+// CORE & MULTI-TENANCY (Better Auth)
+// ==========================================
+
 model User {
   id            String    @id
   name          String
@@ -21,25 +19,27 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  
   sessions      Session[]
   accounts      Account[]
-
-  todos         Todo[]
+  members       Member[]
+  invitations   Invitation[]
 
   @@unique([email])
   @@map("user")
 }
 
 model Session {
-  id        String   @id
-  expiresAt DateTime
-  token     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ipAddress String?
-  userAgent String?
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                   String   @id
+  expiresAt            DateTime
+  token                String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  ipAddress            String?
+  userAgent            String?
+  userId               String
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activeOrganizationId String?
 
   @@unique([token])
   @@index([userId])
@@ -78,15 +78,274 @@ model Verification {
   @@map("verification")
 }
 
-model Todo {
-  id        String   @id @default(uuid())
-  content   String
-  completed Boolean  @default(false)
+model Organization {
+  id        String   @id
+  name      String
+  slug      String?  @unique
+  logo      String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  metadata  String?
 
+  members       Member[]
+  invitations   Invitation[]
+  customers     Customer[]
+  orders        Order[]
+  products      Product[]
+  inventory     InventoryMovement[]
+  workflows     ProductionWorkflow[]
+  transactions  FinancialTransaction[]
+
+  @@map("organization")
+}
+
+model Member {
+  id             String       @id
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           String       // ADMIN, MANAGER, EMPLOYEE
+  createdAt      DateTime     @default(now())
+
+  ordersCreated  Order[]
+  productionTasks OrderProductionStatus[]
+
+  @@index([organizationId])
   @@index([userId])
-  @@map("todo")
+  @@map("member")
+}
+
+model Invitation {
+  id             String       @id
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  email          String
+  role           String?
+  status         String
+  expiresAt      DateTime
+  inviterId      String
+  user           User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@map("invitation")
+}
+
+// ==========================================
+// BUSINESS MODULES
+// ==========================================
+
+// --- CRM ---
+model Customer {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  type           String       // PF, PJ
+  name           String
+  document       String?      // CPF or CNPJ
+  phone          String?
+  whatsapp       String?
+  email          String?
+  address        String?
+  birthDate      DateTime?
+  notes          String?
+  preferences    String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  orders         Order[]
+
+  @@index([organizationId])
+  @@map("customer")
+}
+
+// --- Sales & Orders ---
+model Order {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  customerId     String
+  customer       Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  
+  orderNumber    Int          @default(autoincrement()) // Auto-incrementing identifier
+  status         String       // BUDGET, APPROVED, IN_PRODUCTION, READY, DELIVERED, CANCELED
+  priority       String       @default("NORMAL") // NORMAL, URGENT, EXPRESS
+  
+  totalAmount    Decimal      @db.Decimal(10, 2)
+  discount       Decimal      @default(0) @db.Decimal(10, 2)
+  balancePending Decimal      @default(0) @db.Decimal(10, 2)
+  
+  expectedDate   DateTime?
+  internalNotes  String?
+  customerNotes  String?
+  
+  createdById    String
+  createdBy      Member       @relation(fields: [createdById], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  items          OrderItem[]
+  envelope       OrderEnvelope?
+  productionSteps OrderProductionStatus[]
+  transactions    FinancialTransaction[]
+
+  @@index([organizationId])
+  @@map("order")
+}
+
+model OrderEnvelope {
+  id                   String  @id @default(uuid())
+  orderId              String  @unique
+  order                Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  envelopeNumber       String? // Physical envelope reference (e.g., "9445")
+  receivedMaterials    String[] // Array e.g., ["MEMORY_CARD", "PENDRIVE"]
+  
+  printSize            String?
+  paperSurface         String?
+  copiesQuantity       Int?
+  mediaQuality         String?  // HIGH, MEDIUM, LOW
+  
+  hasIndex             Boolean @default(false)
+  isProductPhoto       Boolean @default(false)
+  hasMontage           Boolean @default(false)
+  sendEmail            Boolean @default(false)
+  
+  digitalServicesNotes String?
+
+  @@map("order_envelope")
+}
+
+model OrderItem {
+  id             String  @id @default(uuid())
+  orderId        String
+  order          Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId      String
+  product        Product @relation(fields: [productId], references: [id])
+  quantity       Int
+  unitPrice      Decimal @db.Decimal(10, 2)
+  total          Decimal @db.Decimal(10, 2)
+
+  @@index([orderId])
+  @@map("order_item")
+}
+
+// --- Inventory & Products ---
+model Product {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  name           String
+  type           String       // RAW_MATERIAL, FINISHED_GOOD, SERVICE
+  costPrice      Decimal      @default(0) @db.Decimal(10, 2)
+  sellingPrice   Decimal      @default(0) @db.Decimal(10, 2)
+  minStock       Decimal      @default(0) @db.Decimal(10, 2)
+  currentStock   Decimal      @default(0) @db.Decimal(10, 2)
+  unitMeasure    String       // UN, KG, M, M2
+  
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  orderItems        OrderItem[]
+  inventory         InventoryMovement[]
+  
+  // Bill of Materials Relations
+  components        ProductComponent[] @relation("ParentProduct")
+  usedIn            ProductComponent[] @relation("ChildProduct")
+
+  @@index([organizationId])
+  @@map("product")
+}
+
+model ProductComponent {
+  id               String  @id @default(uuid())
+  parentProductId  String
+  parentProduct    Product @relation("ParentProduct", fields: [parentProductId], references: [id], onDelete: Cascade)
+  childProductId   String
+  childProduct     Product @relation("ChildProduct", fields: [childProductId], references: [id], onDelete: Cascade)
+  quantityRequired Decimal @db.Decimal(10, 4)
+
+  @@unique([parentProductId, childProductId])
+  @@map("product_component")
+}
+
+model InventoryMovement {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  productId      String
+  product        Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  type           String       // IN, OUT
+  quantity       Decimal      @db.Decimal(10, 2)
+  reason         String?
+  date           DateTime     @default(now())
+
+  @@index([organizationId])
+  @@map("inventory_movement")
+}
+
+// --- Production Workflow ---
+model ProductionWorkflow {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String       // e.g., "Standard Printing", "Custom Framing"
+
+  steps          WorkflowStep[]
+
+  @@index([organizationId])
+  @@map("production_workflow")
+}
+
+model WorkflowStep {
+  id             String             @id @default(uuid())
+  workflowId     String
+  workflow       ProductionWorkflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  name           String
+  orderIndex     Int
+
+  orderStatuses  OrderProductionStatus[]
+
+  @@index([workflowId])
+  @@map("workflow_step")
+}
+
+model OrderProductionStatus {
+  id             String       @id @default(uuid())
+  orderId        String
+  order          Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  stepId         String
+  step           WorkflowStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  
+  assignedToId   String?
+  assignedTo     Member?      @relation(fields: [assignedToId], references: [id])
+  
+  startedAt      DateTime?
+  completedAt    DateTime?
+  delayReason    String?
+
+  @@index([orderId])
+  @@map("order_production_status")
+}
+
+// --- Finance ---
+model FinancialTransaction {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  orderId        String?
+  order          Order?       @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  
+  type           String       // INCOME, EXPENSE
+  amount         Decimal      @db.Decimal(10, 2)
+  dueDate        DateTime
+  paidAt         DateTime?
+  status         String       // PENDING, PAID, OVERDUE
+  paymentMethod  String?      // PIX, CASH, DEBIT, CREDIT, BOLETO
+  category       String?
+  
+  createdAt      DateTime     @default(now())
+
+  @@index([organizationId])
+  @@map("financial_transaction")
 }

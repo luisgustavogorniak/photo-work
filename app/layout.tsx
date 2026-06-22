@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 
 export const metadata: Metadata = {
-  title: "Better Auth with Next.js and Prisma",
+  title: "Photo Work — Gestão para Estúdios de Fotografia",
   description:
-    "A simple authentication example using Better Auth, Next.js, and Prisma.",
+    "Sistema completo de gestão para estúdios de fotografia. Controle seus pedidos, produção, estoque e financeiro em um só lugar.",
 };
 
 export default function RootLayout({
@@ -15,13 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          {children}
-          <Footer />
-        </div>
+        {children}
       </body>
     </html>
   );

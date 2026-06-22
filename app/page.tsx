@@ -3,8 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
+import { Camera } from "lucide-react";
 
 export default function Home() {
   const router = useRouter();
@@ -12,39 +11,48 @@ export default function Home() {
 
   useEffect(() => {
     if (!isPending && session?.user) {
-      router.push("/to-do");
+      router.push("/dashboard");
     }
   }, [isPending, session, router]);
 
-  if (isPending)
+  if (isPending) {
     return (
-      <p className="flex items-center justify-center flex-1">
-        Aguarde... <Spinner />
-      </p>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-6 h-6 border-2 border-pw-accent border-t-transparent rounded-full animate-spin" />
+      </div>
     );
+  }
 
   return (
-    <main className="flex items-center justify-center flex-1">
-      <div className="text-center max-w-md px-6">
-        <h1 className="text-2xl font-bold mb-2">Gorniakdev Todo</h1>
+    <main className="flex items-center justify-center min-h-screen">
+      <div className="text-center max-w-sm px-6">
+        {/* Logo */}
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="w-10 h-10 rounded-lg bg-pw-accent flex items-center justify-center">
+            <Camera size={22} className="text-pw-bg" />
+          </div>
+          <h1 className="text-2xl font-bold text-pw-text tracking-tight">
+            Photo Work
+          </h1>
+        </div>
 
-        <p className="text-base text-[#9ca3af] mb-8">
-          Organize suas tarefas de forma simples e eficiente.
+        <p className="text-sm text-pw-text-muted mb-8">
+          Gestão completa para o seu estúdio de fotografia.
         </p>
 
         <div className="flex flex-col gap-3">
-          <Button
+          <button
             onClick={() => router.push("/sign-up")}
-            className="btn-primary"
+            className="btn-primary text-sm"
           >
             Criar Conta
-          </Button>
-          <Button
+          </button>
+          <button
             onClick={() => router.push("/sign-in")}
-            className="btn-secondary"
+            className="btn-secondary text-sm"
           >
             Fazer Login
-          </Button>
+          </button>
         </div>
       </div>
     </main>
