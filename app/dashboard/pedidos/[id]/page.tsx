@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { getOrderById, updateOrderStatus } from "@/app/actions/order.actions";
+import { listProductionWorkflows, startOrderProduction } from "@/app/actions/production.actions";
 import { ArrowLeft, User, Package, FolderOpen, CreditCard, Check, Clock, AlertTriangle, ArrowRight } from "lucide-react";
 
 const statusColors: Record<string, string> = {
@@ -32,6 +33,11 @@ export default function PedidoDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Workflow Selection
+  const [workflows, setWorkflows] = useState<any[]>([]);
+  const [selectedWfId, setSelectedWfId] = useState("");
+  const [showWfSelect, setShowWfSelect] = useState(false);
+
   const fetchOrder = useCallback(async () => {
     setLoading(true);
     const result = await getOrderById(orderId);
@@ -45,12 +51,29 @@ export default function PedidoDetailsPage() {
 
   useEffect(() => {
     fetchOrder();
+    listProductionWorkflows().then(res => {
+      if (res.success && res.workflows.length > 0) {
+        setWorkflows(res.workflows);
+        setSelectedWfId(res.workflows[0].id);
+      }
+    });
   }, [fetchOrder]);
 
   const handleStatusChange = async (newStatus: string) => {
     const result = await updateOrderStatus(orderId, newStatus);
     if (result.success) {
       setOrder({ ...order, status: newStatus });
+    } else {
+      alert(result.error);
+    }
+  };
+
+  const handleStartProduction = async () => {
+    if (!selectedWfId) return alert("Selecione um fluxo de produção.");
+    const result = await startOrderProduction(orderId, selectedWfId);
+    if (result.success) {
+      setOrder({ ...order, status: 'IN_PRODUCTION' });
+      setShowWfSelect(false);
     } else {
       alert(result.error);
     }
@@ -82,11 +105,26 @@ export default function PedidoDetailsPage() {
         
         {/* Status Actions */}
         <div className="flex items-center gap-2">
-          {order.status === 'APPROVED' && (
-            <button onClick={() => handleStatusChange('IN_PRODUCTION')} className="btn-primary text-xs py-1.5 px-3 flex items-center gap-2">
+          {order.status === 'APPROVED' && !showWfSelect && (
+            <button onClick={() => setShowWfSelect(true)} className="btn-primary text-xs py-1.5 px-3 flex items-center gap-2">
               Enviar p/ Produção <ArrowRight size={14} />
             </button>
           )}
+          
+          {order.status === 'APPROVED' && showWfSelect && (
+            <div className="flex items-center gap-2 bg-pw-surface p-1 rounded-md border border-pw-border">
+              <select 
+                value={selectedWfId} 
+                onChange={e => setSelectedWfId(e.target.value)}
+                className="input-field py-1 text-xs"
+              >
+                {workflows.map(wf => <option key={wf.id} value={wf.id}>{wf.name}</option>)}
+              </select>
+              <button onClick={handleStartProduction} className="btn-primary text-xs py-1 px-3">Confirmar</button>
+              <button onClick={() => setShowWfSelect(false)} className="btn-secondary text-xs py-1 px-2">X</button>
+            </div>
+          )}
+
           {order.status === 'IN_PRODUCTION' && (
             <button onClick={() => handleStatusChange('READY')} className="btn-primary text-xs py-1.5 px-3 flex items-center gap-2 bg-pw-success hover:bg-pw-success/80 text-white">
               Marcar como Pronto <Check size={14} />
