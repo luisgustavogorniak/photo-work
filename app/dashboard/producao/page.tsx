@@ -67,7 +67,7 @@ export default function ProducaoKanbanPage() {
   }
 
   return (
-    <div className="h-[calc(100vh-80px)] flex flex-col">
+    <div className="flex flex-col">
       <div className="flex items-center justify-between mb-6 flex-shrink-0">
         <div>
           <h1 className="text-2xl font-bold text-pw-text">Kanban de Produção</h1>
@@ -98,13 +98,13 @@ export default function ProducaoKanbanPage() {
       {loading ? (
         <div className="flex-1 flex justify-center items-center"><div className="w-5 h-5 border-2 border-pw-accent border-t-transparent rounded-full animate-spin" /></div>
       ) : (
-        <div className="flex-1 overflow-x-auto pb-4">
-          <div className="flex gap-4 h-full items-start" style={{ width: 'max-content' }}>
+        <div className="pb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 items-start">
             {board.map((step, stepIndex) => {
               const nextStep = board[stepIndex + 1];
               
               return (
-                <div key={step.id} className="w-80 bg-pw-surface/50 border border-pw-border rounded-lg flex flex-col max-h-full">
+                <div key={step.id} className="w-full bg-pw-surface/50 border border-pw-border rounded-lg flex flex-col max-h-[70vh]">
                   
                   {/* Column Header */}
                   <div className="p-3 border-b border-pw-border flex justify-between items-center bg-pw-surface rounded-t-lg">
