@@ -38,11 +38,11 @@ export async function getFinancialDashboard() {
 
     currentMonthOrders.forEach(order => {
       const total = Number(order.totalAmount)
-      const advance = Number(order.advancePayment || 0)
+      const balancePending = Number(order.balancePending || 0)
       
       faturamentoTotal += total
-      // O que falta receber (assumindo que entregues e prontos podem ter pago na hora, mas para MVP vamos descontar apenas o advance)
-      valoresReceber += Math.max(0, total - advance)
+      // O que falta receber (assumindo que entregues e prontos podem ter pago na hora, mas para MVP vamos somar o balancePending)
+      valoresReceber += balancePending
 
       // Agrupar produtos
       order.items.forEach(item => {
