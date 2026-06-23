@@ -45,7 +45,7 @@ export async function createProduct(data: ProductFormData) {
     })
 
     // Registra movimento de estoque inicial se houver estoque
-    if (product.currentStock > 0) {
+    if (Number(product.currentStock) > 0) {
       await prisma.inventoryMovement.create({
         data: {
           organizationId,
@@ -119,7 +119,7 @@ export async function getProductById(productId: string) {
             parentProduct: true
           }
         },
-        movements: {
+        inventory: {
           orderBy: { date: 'desc' },
           take: 10
         }
@@ -189,8 +189,8 @@ export async function adjustInventory(productId: string, quantity: number, type:
     }
 
     const newStock = type === 'IN' 
-      ? existing.currentStock + quantity 
-      : existing.currentStock - quantity
+      ? Number(existing.currentStock) + quantity 
+      : Number(existing.currentStock) - quantity
 
     if (newStock < 0) {
       return { success: false, error: 'Estoque insuficiente para esta saída.' }

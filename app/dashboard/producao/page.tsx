@@ -33,7 +33,7 @@ export default function ProducaoKanbanPage() {
   async function fetchBoard() {
     setLoading(true);
     const res = await getKanbanBoard(selectedWfId);
-    if (res.success) {
+    if (res.success && res.board) {
       setBoard(res.board);
     }
     setLoading(false);

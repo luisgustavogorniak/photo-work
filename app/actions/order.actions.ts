@@ -108,6 +108,7 @@ export async function createOrder(data: CreateOrderData) {
             amount: data.advancePayment,
             status: 'PAID',
             paidAt: new Date(),
+            dueDate: new Date(),
             paymentMethod: 'CASH', // Poderia ser selecionável no UI
             category: 'Adiantamento de Pedido'
           }

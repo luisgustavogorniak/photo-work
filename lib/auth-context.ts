@@ -2,6 +2,7 @@
 
 import { auth } from '@/lib/auth'
 import { headers } from 'next/headers'
+import prisma from '@/lib/prisma'
 
 /**
  * Retorna a sessão autenticada e o organizationId ativo.
@@ -25,9 +26,15 @@ export async function getAuthenticatedContext() {
     throw new Error('Nenhuma organização ativa. Faça o onboarding primeiro.')
   }
 
+  // Buscar o Member ID correspondente
+  const member = await prisma.member.findFirst({
+    where: { userId: session.user.id, organizationId }
+  })
+
   return {
     userId: session.user.id,
     organizationId,
+    memberId: member?.id,
     session,
   }
 }

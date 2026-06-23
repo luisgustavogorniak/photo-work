@@ -26,6 +26,7 @@ async function main() {
   if (!member) {
     member = await prisma.member.create({
       data: {
+        id: crypto.randomUUID(),
         organizationId: organization.id,
         userId: user.id,
         role: 'ADMIN'
