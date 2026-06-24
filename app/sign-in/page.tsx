@@ -28,7 +28,18 @@ export default function SignInPage() {
     if (res.error) {
       setError(res.error.message || "Ocorreu um erro ao fazer login.");
     } else {
-      router.push("/dashboard");
+      // Puxa as organizações do usuário
+      const { organization } = await import("@/lib/auth-client");
+      const orgs = await organization.list();
+      
+      if (orgs.data && orgs.data.length > 0) {
+        // Ativa o estúdio principal
+        await organization.setActive({ organizationId: orgs.data[0].id });
+        router.push("/dashboard");
+      } else {
+        // Se realmente não tem estúdio, manda pro onboarding
+        router.push("/onboarding");
+      }
     }
   }
 
