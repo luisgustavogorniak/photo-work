@@ -22,7 +22,18 @@ export function Header() {
 
         <div className="flex gap-2">
           {isLoggedIn ? (
-            <Button onClick={() => signOut()} className="btn-primary text-sm">
+            <Button
+              onClick={async () => {
+                await signOut({
+                  fetchOptions: {
+                    onSuccess: () => {
+                      window.location.href = "/sign-in";
+                    },
+                  },
+                });
+              }}
+              className="btn-primary text-sm"
+            >
               Sair
             </Button>
           ) : (

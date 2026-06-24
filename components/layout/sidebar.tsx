@@ -78,7 +78,15 @@ export function Sidebar() {
           <span>Configurações</span>
         </Link>
         <button
-          onClick={() => signOut()}
+          onClick={async () => {
+            await signOut({
+              fetchOptions: {
+                onSuccess: () => {
+                  window.location.href = "/sign-in";
+                },
+              },
+            });
+          }}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-pw-text-muted hover:text-pw-danger hover:bg-pw-bg transition-all duration-150 cursor-pointer"
         >
           <LogOut size={18} />
