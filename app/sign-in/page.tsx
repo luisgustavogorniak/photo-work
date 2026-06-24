@@ -23,21 +23,27 @@ export default function SignInPage() {
       password: formData.get("password") as string,
     });
 
-    setLoading(false);
-
     if (res.error) {
-      setError(res.error.message || "Ocorreu um erro ao fazer login.");
+      setLoading(false);
+      let errorMsg = res.error.message || "Ocorreu um erro ao fazer login.";
+      
+      // Traduz os erros mais comuns
+      if (errorMsg.includes("Invalid email or password") || errorMsg.includes("Invalid password")) {
+        errorMsg = "E-mail ou senha incorretos.";
+      } else if (errorMsg.includes("User not found")) {
+        errorMsg = "Usuário não encontrado.";
+      }
+      
+      setError(errorMsg);
     } else {
-      // Puxa as organizações do usuário
+      // Deixa o loading=true enquanto puxa os dados e redirecioniona
       const { organization } = await import("@/lib/auth-client");
       const orgs = await organization.list();
       
       if (orgs.data && orgs.data.length > 0) {
-        // Ativa o estúdio principal
         await organization.setActive({ organizationId: orgs.data[0].id });
         router.push("/dashboard");
       } else {
-        // Se realmente não tem estúdio, manda pro onboarding
         router.push("/onboarding");
       }
     }

@@ -32,10 +32,15 @@ export default function SignUpPage() {
       password,
     });
 
-    setLoading(false);
-
     if (res.error) {
-      setError(res.error.message || "Ocorreu um erro ao criar a conta.");
+      setLoading(false);
+      let errorMsg = res.error.message || "Ocorreu um erro ao criar a conta.";
+      
+      if (errorMsg.includes("User already exists")) {
+        errorMsg = "Já existe uma conta com este e-mail.";
+      }
+      
+      setError(errorMsg);
     } else {
       router.push("/onboarding");
     }
