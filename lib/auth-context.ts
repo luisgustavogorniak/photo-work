@@ -20,7 +20,19 @@ export async function getAuthenticatedContext() {
     throw new Error('Usuário não autenticado.')
   }
 
-  const organizationId = session.session.activeOrganizationId
+  let organizationId = session.session.activeOrganizationId
+
+  if (!organizationId) {
+    // Fallback: se não há organização ativa na sessão (ex: login recente),
+    // pegamos a primeira organização que o usuário faz parte.
+    const firstMembership = await prisma.member.findFirst({
+      where: { userId: session.user.id }
+    })
+    
+    if (firstMembership) {
+      organizationId = firstMembership.organizationId
+    }
+  }
 
   if (!organizationId) {
     throw new Error('Nenhuma organização ativa. Faça o onboarding primeiro.')
