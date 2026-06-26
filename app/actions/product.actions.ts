@@ -58,7 +58,7 @@ export async function createProduct(data: ProductFormData) {
       })
     }
 
-    return { success: true, product }
+    return { success: true, product: JSON.parse(JSON.stringify(product)) }
   } catch (error: any) {
     console.error('Erro ao criar produto:', error)
     return { success: false, error: error.message }
@@ -88,7 +88,7 @@ export async function listProducts(search?: string, typeFilter?: string) {
       orderBy: { name: 'asc' },
     })
 
-    return { success: true, products }
+    return { success: true, products: JSON.parse(JSON.stringify(products)) }
   } catch (error: any) {
     console.error('Erro ao listar produtos:', error)
     return { success: false, error: error.message, products: [] }
@@ -130,7 +130,7 @@ export async function getProductById(productId: string) {
       return { success: false, error: 'Produto não encontrado.' }
     }
 
-    return { success: true, product }
+    return { success: true, product: JSON.parse(JSON.stringify(product)) }
   } catch (error: any) {
     console.error('Erro ao buscar produto:', error)
     return { success: false, error: error.message }
@@ -165,7 +165,7 @@ export async function updateProduct(productId: string, data: ProductFormData) {
       },
     })
 
-    return { success: true, product }
+    return { success: true, product: JSON.parse(JSON.stringify(product)) }
   } catch (error: any) {
     console.error('Erro ao atualizar produto:', error)
     return { success: false, error: error.message }

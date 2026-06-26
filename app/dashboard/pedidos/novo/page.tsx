@@ -18,7 +18,7 @@ export default function NovoPedidoPage() {
   
   // Form State
   const [customerId, setCustomerId] = useState("");
-  const [items, setItems] = useState<Array<OrderItemData & { name: string, maxStock?: number }>>([]);
+  const [items, setItems] = useState<Array<OrderItemData & { name: string, maxStock?: number, costPrice: number }>>([]);
   const [selectedProductId, setSelectedProductId] = useState("");
   const [selectedQty, setSelectedQty] = useState("1");
   
@@ -39,6 +39,7 @@ export default function NovoPedidoPage() {
 
   // Financial State
   const [discount, setDiscount] = useState("0");
+  const [laboratoryCost, setLaboratoryCost] = useState("0");
   const [advancePayment, setAdvancePayment] = useState("0");
 
   const loadData = useCallback(async () => {
@@ -73,6 +74,9 @@ export default function NovoPedidoPage() {
     const product = products.find(p => p.id === selectedProductId);
     if (!product) return;
 
+    const additionalCost = Number(product.costPrice) * qty;
+    setLaboratoryCost(prev => (Number(prev) + additionalCost).toFixed(2));
+
     setItems(prev => {
       const existing = prev.find(i => i.productId === selectedProductId);
       if (existing) {
@@ -84,6 +88,7 @@ export default function NovoPedidoPage() {
         productId: product.id, 
         name: product.name, 
         unitPrice: Number(product.sellingPrice), 
+        costPrice: Number(product.costPrice),
         quantity: qty 
       }];
     });
@@ -93,7 +98,12 @@ export default function NovoPedidoPage() {
   };
 
   const handleRemoveItem = (idx: number) => {
-    setItems(prev => prev.filter((_, i) => i !== idx));
+    setItems(prev => {
+      const itemToRemove = prev[idx];
+      const removedCost = itemToRemove.quantity * itemToRemove.costPrice;
+      setLaboratoryCost(prevCost => Math.max(0, Number(prevCost) - removedCost).toFixed(2));
+      return prev.filter((_, i) => i !== idx);
+    });
   };
 
   const toggleMaterial = (mat: string) => {
@@ -122,6 +132,7 @@ export default function NovoPedidoPage() {
       },
       totalAmount: subtotal,
       discount: Number(discount) || 0,
+      laboratoryCost: Number(laboratoryCost) || 0,
       advancePayment: Number(advancePayment) || 0,
     };
 
@@ -355,6 +366,16 @@ export default function NovoPedidoPage() {
                   value={discount} 
                   onChange={e => setDiscount(e.target.value)} 
                   className="input-field text-right text-sm py-1.5 w-24"
+                />
+              </div>
+
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-sm text-pw-text-muted whitespace-nowrap">Custo Lab. R$</span>
+                <input 
+                  type="number" step="0.01" min="0" 
+                  value={laboratoryCost} 
+                  onChange={e => setLaboratoryCost(e.target.value)} 
+                  className="input-field text-right text-sm py-1.5 w-24 border-pw-warning/50 text-pw-warning"
                 />
               </div>
 

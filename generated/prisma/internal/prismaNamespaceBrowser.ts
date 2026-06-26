@@ -211,6 +211,7 @@ export const OrderScalarFieldEnum = {
   priority: 'priority',
   totalAmount: 'totalAmount',
   discount: 'discount',
+  laboratoryCost: 'laboratoryCost',
   balancePending: 'balancePending',
   expectedDate: 'expectedDate',
   internalNotes: 'internalNotes',

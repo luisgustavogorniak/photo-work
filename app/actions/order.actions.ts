@@ -33,6 +33,7 @@ export type CreateOrderData = {
   envelope: OrderEnvelopeData
   totalAmount: number
   discount: number
+  laboratoryCost?: number
   advancePayment: number // Sinal
   expectedDate?: string
   internalNotes?: string
@@ -64,6 +65,7 @@ export async function createOrder(data: CreateOrderData) {
           priority: 'NORMAL',
           totalAmount: data.totalAmount,
           discount: data.discount,
+          laboratoryCost: data.laboratoryCost || 0,
           balancePending: balancePending,
           expectedDate: data.expectedDate ? new Date(data.expectedDate) : null,
           internalNotes: data.internalNotes,
@@ -198,7 +200,7 @@ export async function listOrders(statusFilter?: string) {
       orderBy: { createdAt: 'desc' }
     })
 
-    return { success: true, orders }
+    return { success: true, orders: JSON.parse(JSON.stringify(orders)) }
   } catch (error: any) {
     console.error('Erro ao listar pedidos:', error)
     return { success: false, error: error.message, orders: [] }
@@ -235,7 +237,7 @@ export async function getOrderById(orderId: string) {
       return { success: false, error: 'Pedido não encontrado.' }
     }
 
-    return { success: true, order }
+    return { success: true, order: JSON.parse(JSON.stringify(order)) }
   } catch (error: any) {
     console.error('Erro ao buscar pedido:', error)
     return { success: false, error: error.message }
@@ -257,9 +259,52 @@ export async function updateOrderStatus(orderId: string, newStatus: string) {
 
     // TODO: Se newStatus for CANCELED, implementar lógica de devolução de estoque (estorno).
 
-    return { success: true, order }
+    return { success: true, order: JSON.parse(JSON.stringify(order)) }
   } catch (error: any) {
     console.error('Erro ao atualizar status:', error)
     return { success: false, error: error.message }
+  }
+}
+
+// ==========================================
+// AGENDA DE PRODUÇÃO (SIMPLIFICADA)
+// ==========================================
+
+export async function getProductionAgenda() {
+  try {
+    const { organizationId } = await getAuthenticatedContext()
+
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
+
+    const orders = await prisma.order.findMany({
+      where: {
+        organizationId,
+        status: { not: 'CANCELED' },
+        OR: [
+          { status: { in: ['BUDGET', 'APPROVED', 'IN_PRODUCTION', 'READY'] } },
+          { status: 'DELIVERED', updatedAt: { gte: twentyFourHoursAgo } }
+        ]
+      },
+      include: {
+        customer: { select: { name: true, phone: true } },
+        items: {
+          include: { product: { select: { name: true } } }
+        },
+        envelope: true
+      },
+      orderBy: { expectedDate: 'asc' }
+    })
+
+    const todo = orders.filter(o => ['BUDGET', 'APPROVED', 'IN_PRODUCTION'].includes(o.status))
+    const done = orders.filter(o => ['READY', 'DELIVERED'].includes(o.status))
+
+    return { 
+      success: true, 
+      todo: JSON.parse(JSON.stringify(todo)), 
+      done: JSON.parse(JSON.stringify(done)) 
+    }
+  } catch (error: any) {
+    console.error('Erro ao buscar agenda:', error)
+    return { success: false, error: error.message, todo: [], done: [] }
   }
 }

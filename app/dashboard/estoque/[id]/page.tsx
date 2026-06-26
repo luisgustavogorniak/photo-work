@@ -256,7 +256,7 @@ export default function ProductProfilePage() {
                 <button type="submit" className="btn-primary text-sm px-4">Add</button>
               </form>
 
-              {product.components.length === 0 ? (
+              {(!product.components || product.components.length === 0) ? (
                 <p className="text-sm text-center py-4 text-pw-text-muted border border-dashed border-pw-border rounded-md">
                   Nenhum insumo configurado.
                 </p>
@@ -313,11 +313,11 @@ export default function ProductProfilePage() {
               <h2 className="text-sm font-semibold text-pw-text mb-4 flex items-center gap-2">
                 <Box size={16} /> Movimentações Recentes
               </h2>
-              {product.movements.length === 0 ? (
+              {(!product.inventory || product.inventory.length === 0) ? (
                 <p className="text-xs text-center text-pw-text-muted">Nenhuma movimentação.</p>
               ) : (
                 <div className="space-y-3">
-                  {product.movements.map((m: any) => (
+                  {product.inventory.map((m: any) => (
                     <div key={m.id} className="flex items-center justify-between border-b border-pw-border/30 pb-3 last:border-0 last:pb-0">
                       <div className="flex items-center gap-2">
                         {m.type === "IN" ? <TrendingUp size={16} className="text-pw-success" /> : <TrendingDown size={16} className="text-pw-danger" />}

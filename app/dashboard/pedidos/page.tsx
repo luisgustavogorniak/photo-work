@@ -132,17 +132,22 @@ export default function PedidosPage() {
 
               <div className="pt-3 border-t border-pw-border flex justify-between items-end">
                 <div>
-                  <p className="text-[10px] text-pw-text-muted">Total do Pedido</p>
-                  <p className="text-sm font-semibold text-pw-text">R$ {Number(order.totalAmount).toFixed(2)}</p>
+                  <p className="text-[10px] text-pw-text-muted">Total / Lucro</p>
+                  <p className="text-sm font-semibold text-pw-text">R$ {Number(order.totalAmount - order.discount).toFixed(2)}</p>
+                  <p className="text-xs font-medium text-pw-success">+ R$ {Number((order.totalAmount - order.discount) - (order.laboratoryCost || 0)).toFixed(2)}</p>
                 </div>
                 {Number(order.balancePending) > 0 && (
                   <div className="text-right">
+                    <p className="text-[10px] text-pw-text-muted">Custo Lab.</p>
+                    <p className="text-xs font-semibold text-pw-warning mb-1">R$ {Number(order.laboratoryCost || 0).toFixed(2)}</p>
                     <p className="text-[10px] text-pw-text-muted">Falta Pagar</p>
                     <p className="text-sm font-bold text-pw-danger">R$ {Number(order.balancePending).toFixed(2)}</p>
                   </div>
                 )}
                 {Number(order.balancePending) === 0 && (
                   <div className="text-right">
+                    <p className="text-[10px] text-pw-text-muted">Custo Lab.</p>
+                    <p className="text-xs font-semibold text-pw-warning mb-1">R$ {Number(order.laboratoryCost || 0).toFixed(2)}</p>
                     <span className="text-[10px] uppercase font-bold text-pw-success px-2 py-0.5 rounded-full bg-pw-success/10 border border-pw-success/20">Pago</span>
                   </div>
                 )}

@@ -30,6 +30,7 @@ export type OrderAvgAggregateOutputType = {
   orderNumber: number | null
   totalAmount: runtime.Decimal | null
   discount: runtime.Decimal | null
+  laboratoryCost: runtime.Decimal | null
   balancePending: runtime.Decimal | null
 }
 
@@ -37,6 +38,7 @@ export type OrderSumAggregateOutputType = {
   orderNumber: number | null
   totalAmount: runtime.Decimal | null
   discount: runtime.Decimal | null
+  laboratoryCost: runtime.Decimal | null
   balancePending: runtime.Decimal | null
 }
 
@@ -49,6 +51,7 @@ export type OrderMinAggregateOutputType = {
   priority: string | null
   totalAmount: runtime.Decimal | null
   discount: runtime.Decimal | null
+  laboratoryCost: runtime.Decimal | null
   balancePending: runtime.Decimal | null
   expectedDate: Date | null
   internalNotes: string | null
@@ -67,6 +70,7 @@ export type OrderMaxAggregateOutputType = {
   priority: string | null
   totalAmount: runtime.Decimal | null
   discount: runtime.Decimal | null
+  laboratoryCost: runtime.Decimal | null
   balancePending: runtime.Decimal | null
   expectedDate: Date | null
   internalNotes: string | null
@@ -85,6 +89,7 @@ export type OrderCountAggregateOutputType = {
   priority: number
   totalAmount: number
   discount: number
+  laboratoryCost: number
   balancePending: number
   expectedDate: number
   internalNotes: number
@@ -100,6 +105,7 @@ export type OrderAvgAggregateInputType = {
   orderNumber?: true
   totalAmount?: true
   discount?: true
+  laboratoryCost?: true
   balancePending?: true
 }
 
@@ -107,6 +113,7 @@ export type OrderSumAggregateInputType = {
   orderNumber?: true
   totalAmount?: true
   discount?: true
+  laboratoryCost?: true
   balancePending?: true
 }
 
@@ -119,6 +126,7 @@ export type OrderMinAggregateInputType = {
   priority?: true
   totalAmount?: true
   discount?: true
+  laboratoryCost?: true
   balancePending?: true
   expectedDate?: true
   internalNotes?: true
@@ -137,6 +145,7 @@ export type OrderMaxAggregateInputType = {
   priority?: true
   totalAmount?: true
   discount?: true
+  laboratoryCost?: true
   balancePending?: true
   expectedDate?: true
   internalNotes?: true
@@ -155,6 +164,7 @@ export type OrderCountAggregateInputType = {
   priority?: true
   totalAmount?: true
   discount?: true
+  laboratoryCost?: true
   balancePending?: true
   expectedDate?: true
   internalNotes?: true
@@ -260,6 +270,7 @@ export type OrderGroupByOutputType = {
   priority: string
   totalAmount: runtime.Decimal
   discount: runtime.Decimal
+  laboratoryCost: runtime.Decimal
   balancePending: runtime.Decimal
   expectedDate: Date | null
   internalNotes: string | null
@@ -301,6 +312,7 @@ export type OrderWhereInput = {
   priority?: Prisma.StringFilter<"Order"> | string
   totalAmount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   internalNotes?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -326,6 +338,7 @@ export type OrderOrderByWithRelationInput = {
   priority?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
+  laboratoryCost?: Prisma.SortOrder
   balancePending?: Prisma.SortOrder
   expectedDate?: Prisma.SortOrderInput | Prisma.SortOrder
   internalNotes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -354,6 +367,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   priority?: Prisma.StringFilter<"Order"> | string
   totalAmount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   internalNotes?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -379,6 +393,7 @@ export type OrderOrderByWithAggregationInput = {
   priority?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
+  laboratoryCost?: Prisma.SortOrder
   balancePending?: Prisma.SortOrder
   expectedDate?: Prisma.SortOrderInput | Prisma.SortOrder
   internalNotes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -405,6 +420,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   priority?: Prisma.StringWithAggregatesFilter<"Order"> | string
   totalAmount?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
   internalNotes?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -421,6 +437,7 @@ export type OrderCreateInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -445,6 +462,7 @@ export type OrderUncheckedCreateInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -465,6 +483,7 @@ export type OrderUpdateInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -489,6 +508,7 @@ export type OrderUncheckedUpdateInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -511,6 +531,7 @@ export type OrderCreateManyInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -527,6 +548,7 @@ export type OrderUpdateManyMutationInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -544,6 +566,7 @@ export type OrderUncheckedUpdateManyInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -572,6 +595,7 @@ export type OrderCountOrderByAggregateInput = {
   priority?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
+  laboratoryCost?: Prisma.SortOrder
   balancePending?: Prisma.SortOrder
   expectedDate?: Prisma.SortOrder
   internalNotes?: Prisma.SortOrder
@@ -585,6 +609,7 @@ export type OrderAvgOrderByAggregateInput = {
   orderNumber?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
+  laboratoryCost?: Prisma.SortOrder
   balancePending?: Prisma.SortOrder
 }
 
@@ -597,6 +622,7 @@ export type OrderMaxOrderByAggregateInput = {
   priority?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
+  laboratoryCost?: Prisma.SortOrder
   balancePending?: Prisma.SortOrder
   expectedDate?: Prisma.SortOrder
   internalNotes?: Prisma.SortOrder
@@ -615,6 +641,7 @@ export type OrderMinOrderByAggregateInput = {
   priority?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
+  laboratoryCost?: Prisma.SortOrder
   balancePending?: Prisma.SortOrder
   expectedDate?: Prisma.SortOrder
   internalNotes?: Prisma.SortOrder
@@ -628,6 +655,7 @@ export type OrderSumOrderByAggregateInput = {
   orderNumber?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   discount?: Prisma.SortOrder
+  laboratoryCost?: Prisma.SortOrder
   balancePending?: Prisma.SortOrder
 }
 
@@ -848,6 +876,7 @@ export type OrderCreateWithoutOrganizationInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -870,6 +899,7 @@ export type OrderUncheckedCreateWithoutOrganizationInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -921,6 +951,7 @@ export type OrderScalarWhereInput = {
   priority?: Prisma.StringFilter<"Order"> | string
   totalAmount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   internalNotes?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -937,6 +968,7 @@ export type OrderCreateWithoutCreatedByInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -960,6 +992,7 @@ export type OrderUncheckedCreateWithoutCreatedByInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1005,6 +1038,7 @@ export type OrderCreateWithoutCustomerInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1027,6 +1061,7 @@ export type OrderUncheckedCreateWithoutCustomerInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1073,6 +1108,7 @@ export type OrderCreateWithoutEnvelopeInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1096,6 +1132,7 @@ export type OrderUncheckedCreateWithoutEnvelopeInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1131,6 +1168,7 @@ export type OrderUpdateWithoutEnvelopeInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1154,6 +1192,7 @@ export type OrderUncheckedUpdateWithoutEnvelopeInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1173,6 +1212,7 @@ export type OrderCreateWithoutItemsInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1196,6 +1236,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1231,6 +1272,7 @@ export type OrderUpdateWithoutItemsInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1254,6 +1296,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1273,6 +1316,7 @@ export type OrderCreateWithoutProductionStepsInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1296,6 +1340,7 @@ export type OrderUncheckedCreateWithoutProductionStepsInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1331,6 +1376,7 @@ export type OrderUpdateWithoutProductionStepsInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1354,6 +1400,7 @@ export type OrderUncheckedUpdateWithoutProductionStepsInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1373,6 +1420,7 @@ export type OrderCreateWithoutTransactionsInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1396,6 +1444,7 @@ export type OrderUncheckedCreateWithoutTransactionsInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1431,6 +1480,7 @@ export type OrderUpdateWithoutTransactionsInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1454,6 +1504,7 @@ export type OrderUncheckedUpdateWithoutTransactionsInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1474,6 +1525,7 @@ export type OrderCreateManyOrganizationInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1490,6 +1542,7 @@ export type OrderUpdateWithoutOrganizationInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1512,6 +1565,7 @@ export type OrderUncheckedUpdateWithoutOrganizationInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1533,6 +1587,7 @@ export type OrderUncheckedUpdateManyWithoutOrganizationInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1551,6 +1606,7 @@ export type OrderCreateManyCreatedByInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1566,6 +1622,7 @@ export type OrderUpdateWithoutCreatedByInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1589,6 +1646,7 @@ export type OrderUncheckedUpdateWithoutCreatedByInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1610,6 +1668,7 @@ export type OrderUncheckedUpdateManyWithoutCreatedByInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1626,6 +1685,7 @@ export type OrderCreateManyCustomerInput = {
   priority?: string
   totalAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Date | string | null
   internalNotes?: string | null
@@ -1642,6 +1702,7 @@ export type OrderUpdateWithoutCustomerInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1664,6 +1725,7 @@ export type OrderUncheckedUpdateWithoutCustomerInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1685,6 +1747,7 @@ export type OrderUncheckedUpdateManyWithoutCustomerInput = {
   priority?: Prisma.StringFieldUpdateOperationsInput | string
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laboratoryCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   balancePending?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   expectedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   internalNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1752,6 +1815,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   priority?: boolean
   totalAmount?: boolean
   discount?: boolean
+  laboratoryCost?: boolean
   balancePending?: boolean
   expectedDate?: boolean
   internalNotes?: boolean
@@ -1778,6 +1842,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   priority?: boolean
   totalAmount?: boolean
   discount?: boolean
+  laboratoryCost?: boolean
   balancePending?: boolean
   expectedDate?: boolean
   internalNotes?: boolean
@@ -1799,6 +1864,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   priority?: boolean
   totalAmount?: boolean
   discount?: boolean
+  laboratoryCost?: boolean
   balancePending?: boolean
   expectedDate?: boolean
   internalNotes?: boolean
@@ -1820,6 +1886,7 @@ export type OrderSelectScalar = {
   priority?: boolean
   totalAmount?: boolean
   discount?: boolean
+  laboratoryCost?: boolean
   balancePending?: boolean
   expectedDate?: boolean
   internalNotes?: boolean
@@ -1829,7 +1896,7 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "customerId" | "orderNumber" | "status" | "priority" | "totalAmount" | "discount" | "balancePending" | "expectedDate" | "internalNotes" | "customerNotes" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "customerId" | "orderNumber" | "status" | "priority" | "totalAmount" | "discount" | "laboratoryCost" | "balancePending" | "expectedDate" | "internalNotes" | "customerNotes" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -1871,6 +1938,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     priority: string
     totalAmount: runtime.Decimal
     discount: runtime.Decimal
+    laboratoryCost: runtime.Decimal
     balancePending: runtime.Decimal
     expectedDate: Date | null
     internalNotes: string | null
@@ -2316,6 +2384,7 @@ export interface OrderFieldRefs {
   readonly priority: Prisma.FieldRef<"Order", 'String'>
   readonly totalAmount: Prisma.FieldRef<"Order", 'Decimal'>
   readonly discount: Prisma.FieldRef<"Order", 'Decimal'>
+  readonly laboratoryCost: Prisma.FieldRef<"Order", 'Decimal'>
   readonly balancePending: Prisma.FieldRef<"Order", 'Decimal'>
   readonly expectedDate: Prisma.FieldRef<"Order", 'DateTime'>
   readonly internalNotes: Prisma.FieldRef<"Order", 'String'>

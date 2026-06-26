@@ -48,7 +48,7 @@ export async function createCustomer(data: CustomerFormData) {
       },
     })
 
-    return { success: true, customer }
+    return { success: true, customer: JSON.parse(JSON.stringify(customer)) }
   } catch (error: any) {
     console.error('Erro ao criar cliente:', error)
     return { success: false, error: error.message }
@@ -87,7 +87,7 @@ export async function listCustomers(search?: string) {
       },
     })
 
-    return { success: true, customers }
+    return { success: true, customers: JSON.parse(JSON.stringify(customers)) }
   } catch (error: any) {
     console.error('Erro ao listar clientes:', error)
     return { success: false, error: error.message, customers: [] }
@@ -123,7 +123,7 @@ export async function getCustomerById(customerId: string) {
       return { success: false, error: 'Cliente não encontrado.' }
     }
 
-    return { success: true, customer }
+    return { success: true, customer: JSON.parse(JSON.stringify(customer)) }
   } catch (error: any) {
     console.error('Erro ao buscar cliente:', error)
     return { success: false, error: error.message }
@@ -167,7 +167,7 @@ export async function updateCustomer(customerId: string, data: CustomerFormData)
       },
     })
 
-    return { success: true, customer }
+    return { success: true, customer: JSON.parse(JSON.stringify(customer)) }
   } catch (error: any) {
     console.error('Erro ao atualizar cliente:', error)
     return { success: false, error: error.message }
