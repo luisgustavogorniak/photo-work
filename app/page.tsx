@@ -83,6 +83,22 @@ export default function Home() {
           <h1 className="text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white to-neutral-400">
             Gestão completa para o seu estúdio fotográfico.
           </h1>
+
+          {/* Imagem Mobile (Entre o título e o texto) */}
+          <div className="block lg:hidden w-full relative group perspective-1000 mb-8 mt-2">
+            <div className="absolute inset-0 bg-gradient-to-tr from-pw-accent/20 to-transparent blur-3xl opacity-50 rounded-full" />
+            <div className="relative rounded-2xl overflow-hidden border border-pw-border/50 shadow-2xl shadow-black/50">
+              <Image
+                src="/hero_mockup.jpg"
+                alt="Photo Work Dashboard Mockup"
+                width={800}
+                height={600}
+                className="w-full h-auto object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-pw-bg via-transparent to-transparent opacity-60" />
+            </div>
+          </div>
           
           <p className="text-lg text-pw-text-muted mb-8 max-w-lg leading-relaxed">
             Abandone as planilhas. Controle pedidos, agenda de produção, estoque e financeiro em uma plataforma premium desenhada para o seu balcão.
@@ -128,8 +144,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Lado Direito - Mockup Imagem */}
-        <div className="flex-1 w-full relative group perspective-1000">
+        {/* Lado Direito - Mockup Imagem (Desktop) */}
+        <div className="hidden lg:block flex-1 w-full relative group perspective-1000">
           <div className="absolute inset-0 bg-gradient-to-tr from-pw-accent/20 to-transparent blur-3xl opacity-50 rounded-full" />
           <div className="relative rounded-2xl overflow-hidden border border-pw-border/50 shadow-2xl shadow-black/50 transform transition-transform duration-500 hover:rotate-y-[-5deg] hover:rotate-x-[5deg]">
             <Image
