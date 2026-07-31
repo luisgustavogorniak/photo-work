@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import { Camera, ArrowRight, CheckCircle2 } from "lucide-react";
@@ -9,9 +9,6 @@ import Image from "next/image";
 export default function Home() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
 
   useEffect(() => {
     if (!isPending && session?.user) {
@@ -27,28 +24,7 @@ export default function Home() {
     );
   }
 
-  const validateEmail = (val: string) => {
-    // Regex rigoroso para validação de email
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!val) {
-      return "O email é obrigatório";
-    } else if (!regex.test(val)) {
-      return "Formato de email inválido";
-    }
-    return "";
-  };
 
-  const handleStart = (e: React.FormEvent) => {
-    e.preventDefault();
-    const error = validateEmail(email);
-    if (error) {
-      setEmailError(error);
-      return;
-    }
-    // Supondo que vai redirecionar para o sign-up passando o email na querystring ou localStorage
-    // Para simplificar, manda para o sign-up. 
-    router.push(`/sign-up?email=${encodeURIComponent(email)}`);
-  };
 
   return (
     <main className="min-h-screen bg-pw-bg text-pw-text flex flex-col relative overflow-hidden">
@@ -104,41 +80,16 @@ export default function Home() {
             Abandone as planilhas. Controle pedidos, agenda de produção, estoque e financeiro em uma plataforma premium desenhada para o seu balcão.
           </p>
 
-          {/* Quick Sign-up Form */}
-          <form onSubmit={handleStart} className="w-full max-w-md bg-pw-surface/50 p-4 rounded-xl border border-pw-border backdrop-blur-md">
-            <div className="flex flex-col gap-3">
-              <div>
-                <input
-                  type="email"
-                  placeholder="Seu melhor e-mail"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (emailError) setEmailError("");
-                  }}
-                  className={`input-field w-full ${emailError ? 'border-pw-danger focus:border-pw-danger focus:ring-pw-danger/20' : ''}`}
-                />
-                {emailError && <span className="text-xs text-pw-danger mt-1 block">{emailError}</span>}
-              </div>
-              
-              <div>
-                <input
-                  type="password"
-                  placeholder="Crie uma senha (qualquer uma por enquanto)"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="input-field w-full"
-                />
-              </div>
-              
-              <button type="submit" className="btn-primary w-full py-3 text-base flex items-center justify-center gap-2 group mt-2">
-                Começar agora
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </form>
+          {/* Call to Action Button */}
+          <button 
+            onClick={() => router.push('/sign-up')} 
+            className="btn-primary w-full max-w-sm py-3 px-6 text-base flex items-center justify-center gap-2 group shadow-lg shadow-pw-accent/20"
+          >
+            Começar agora
+            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+          </button>
 
-          <div className="flex items-center gap-6 mt-8 text-sm text-pw-text-muted">
+          <div className="flex items-center gap-6 mt-6 text-sm text-pw-text-muted">
             <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-pw-success" /> Sem cartão de crédito</div>
             <div className="flex items-center gap-2"><CheckCircle2 size={16} className="text-pw-success" /> Setup em 2 minutos</div>
           </div>
