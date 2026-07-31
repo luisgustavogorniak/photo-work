@@ -48,14 +48,6 @@ export default function Home() {
         
         {/* Lado Esquerdo - Copy e Form */}
         <div className="flex-1 flex flex-col items-start text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pw-accent/10 text-pw-accent text-xs font-semibold mb-6 border border-pw-accent/20">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pw-accent opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-pw-accent"></span>
-            </span>
-            Novo Módulo de Produção Disponível
-          </div>
-          
           <h1 className="text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-br from-white to-neutral-400">
             Gestão completa para o seu estúdio fotográfico.
           </h1>
